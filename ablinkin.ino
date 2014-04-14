@@ -97,7 +97,28 @@ byte poke ( byte addr )
     return ( !! Wire.endTransmission() );
 }
 
-byte scan ()
+Board * insertLink ( Board * left, Board * center )
+{
+    if( left == NULL || center == NULL )
+        return NULL;
+
+    Board * right = left->next;
+    left->next = center;
+    center->next = right;
+    return left;
+}
+
+// Rus as `free( removeLinkAfter( node ) );` to auto free the unlinked node
+Board * removeLinkAfter( Board * left )
+{
+    if( left == NULL || left->next == NULL )
+        return NULL;
+    Board * ret = left->next;
+    left->next = ret->next;
+    return ret;
+}
+
+byte scanAndPopulate ()
 {
     byte ncol;
     for ( byte i = 1; i <= 127; i++ )
@@ -110,7 +131,7 @@ byte scan ()
         }
     }
 
-    segment = (Board *) malloc( sizeof(Board) );
+    Board * current = segment;
 
     for ( byte addr = first, addr <= last; addr++ )
     {
@@ -119,8 +140,13 @@ byte scan ()
 
         if ( ( ncol = probe(addr) ) == 0 )
             continue;
-
-// finish segment data structure population
+        
+        current = (Board *) malloc( sizeof(Board) );
+        current->address = addr;
+        current->ncols = ncol;
+        current->next = NULL;
+        current = current->next;
+    }
 
     return count;
 }
@@ -144,8 +170,13 @@ void setup() {
     }
     if ( address == 0 )
     {
+        segment = NULL;
         Wire.begin();
-        delay(100); // Allow for slaves to boot
+        do
+        {
+            delay(100); // allow slaves to come up/wait 100ms and try again
+        }
+        while ( scan() == 0 );
 
         
 // TODO: add in slave code
