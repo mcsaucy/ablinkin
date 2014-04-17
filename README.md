@@ -44,38 +44,31 @@ If you choose to alter flags, then bits 2,4, and 6 will have what you sent to th
 
  
 ``` 
-Packet format:
+Packet format for request:
      _
     |_| <-- 0 = text, 1 = control
-    ...
+    ... <-- the rest of the packet
     
      _
     |0| (text)
-    |_| <-- 0 = don't change 
+    |_| <-- 0 = don't change update flag, 1 = do change update flag
+    |_| <-- if ( bit 1 = 0 ) then it doesn't matter, if bit 1 = 1 then what to set the update flag to
+    ... <-- 5 bits of column display data
     
-    |__| <-- message type: 0 = text, 1 = probe  
-    |  | <-- if text and request, if the sign should update;  
-    |  |         if text and request, whether or not something "fell off";  
-    |  |         if probe, then MSB of #col  
-    |__| <-- if text, then MSB of column data; if probe, next bit of #col  
-    |__| <-- if text, next bit of column data; if probe, next bit of #col  
-    |__| <-- see above  
-    |__| <-- see above  
-    |__| <-- see above  
 ```        
     (The following assume a complete blank slate to start off with)
-    For example, let's send a probe from the master to slave:
+    For example, let's get a column count from the master to slave:
 ```
-        M ---0b01xxxxxx--> S (trailing 6 bits don't matter for probes)
-        M <--0b11110000--- S (110000 converts to 48, so S has 48 columns)
+        M ---0b10xxxxxx--> S (trailing 6 bits don't matter for probes)
+        M <--0b10110000--- S (0110000 converts to 48, so S has 48 columns)
 ```
     Cool, now that we have that information, let's change the slave:
 ```
-        M ---0b00011111--> S (shift in a bar, all turned on, don't update)
-        M <--0b10000000--- S (S says nothing "fell off")
+        M ---0b01011111--> S (shift in a bar, all turned on, unset update flag)
+        M <--0b01000000--- S (S says we're cleared to display and nothing "fell off")
             ... We shift 47 more 11111's ...
-        M ---0b00111111--> S (shift in a bar, all turned on, DO update)  
-        M <--0b10111111--- S (S says something DID fall off, for this  
+        M ---0b01111111--> S (shift in a bar, all turned on, set update flag)  
+        M <--0b01111111--- S (S says we're clear to display, something DID fall off, for this 
                                 specific example, it's the first 11111  
                                 that we pushed to it)
 ```
