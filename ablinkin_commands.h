@@ -67,4 +67,11 @@
 #define GET_MASTER_RESET_FLAG MASTER_RESET_FLAG
 #define GET_DISPLAY_FLAG DISPLAY_FLAG
 
+// We should be done with macros at this point...
+
+
+byte poke ( byte addr );
+
+
+
 #endif
