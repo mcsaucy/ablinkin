@@ -3,8 +3,11 @@
 #ifndef __ABLINKIN_MASTER_H
 #define __ABLINKIN_MASTER_H
 
-byte scanAndPopulate ();
+#include "segment.h"
 
+byte scanAndPopulate ( Board * curr );
+byte getCols( byte tgt );
+byte tapFoot( byte ms, byte times );
 
 
 

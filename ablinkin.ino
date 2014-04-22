@@ -20,44 +20,56 @@ byte count;
 byte first;
 byte last;
 
+byte output_enable;
+byte master_erase;
+byte auto_latch; // disengage storage latch before update, reengage afterwards
+
 // Our segment data structure
 Board * segment;
 
-void setup() {
+void setup()
+{
 
-    Serial.begin(9600);
+    segment = NULL;
     count = 0;
     first = 0;
     last = 0;
 
     for( byte i = 7; i <= 13; i++ )
     {
-    pinMode(i, INPUT);
+        pinMode(i, INPUT);
     }
   
     for ( byte i = 7; i <= 13; i++ )
     {
-    address += digitalRead(i) << (i - 7);
+        address += digitalRead(i) << (i - 7);
     }
+
     if ( address == 0 )
     {
-        segment = NULL;
+        Serial.begin(9600);
         Wire.begin();
+
         do
         {
             delay(100); // allow slaves to come up/wait 100ms and try again
         }
-        while ( scan() == 0 );
+        while ( scanAndPopulate( segment ) == 0 ); // keep trying til it works
+    }
+    else
+    {
+        Wire.begin(address);
+
+
 
         
 // TODO: add in slave code
 
-    else
-    Wire.begin(address);
 }
 
 
-void loop() {
+void loop()
+{
 
     Serial.println(address);
     delay(100);
