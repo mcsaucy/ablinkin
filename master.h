@@ -4,6 +4,7 @@
 #define __ABLINKIN_MASTER_H
 
 #include "segment.h"
+#include <Wire.h>
 
 byte scanAndPopulate ( Board * curr );
 byte getCols( byte tgt );

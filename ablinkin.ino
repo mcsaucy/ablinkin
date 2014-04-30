@@ -20,9 +20,6 @@ byte count;
 byte first;
 byte last;
 
-byte output_enable;
-byte master_erase;
-byte auto_latch; // disengage storage latch before update, reengage afterwards
 
 // Our segment data structure
 Board * segment;
@@ -59,6 +56,8 @@ void setup()
     else
     {
         Wire.begin(address);
+        initSlave();
+        
 
 
 
