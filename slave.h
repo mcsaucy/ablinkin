@@ -4,6 +4,7 @@
 #define __ABLINKIN_SLAVE_H
 
 #include "segment.h"
+#include "sign_common.h"
 #include <Wire.h>
 
 #define NCOLS 48

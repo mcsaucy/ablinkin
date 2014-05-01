@@ -1,25 +1,16 @@
 /*  Ablinkin -- Josh McSavaney
  *  Philbrick segment control hardware.
  *
- *  Architected such that a master probes for slave boards, probes for their 
+ *  Architected such that a master probes for slave boards, probes for their
  *  column count ( max 127 columns ), and then commands the slave signs.
  */
 
 
 #include <Wire.h>
 #include "ablinkin_commands.h"
-#include "segment .h"
+#include "sign_common.h"
+#include "segment.h"
 #include "master.h"
-
-
-#define PROBE 127
-
-byte address;
-byte error;
-byte count;
-byte first;
-byte last;
-
 
 // Our segment data structure
 Board * segment;
@@ -32,14 +23,10 @@ void setup()
     first = 0;
     last = 0;
 
-    for( byte i = 7; i <= 13; i++ )
+    for( byte i = 2; i <= 9; i++ )
     {
         pinMode(i, INPUT);
-    }
-  
-    for ( byte i = 7; i <= 13; i++ )
-    {
-        address += digitalRead(i) << (i - 7);
+        address |= digitalRead(i) << (i - 2);
     }
 
     if ( address == 0 )
@@ -57,15 +44,8 @@ void setup()
     {
         Wire.begin(address);
         initSlave();
-        
-
-
-
-        
-// TODO: add in slave code
-
+    }
 }
-
 
 void loop()
 {
@@ -73,7 +53,5 @@ void loop()
     Serial.println(address);
     delay(100);
 }
-
-
 
 

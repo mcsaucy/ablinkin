@@ -1,5 +1,6 @@
 // Ablinkin board definitions and common helper functions
-
+#ifdef __SEGMENT_H
+#define __SEGMENT_H
 #include "ablinkin_commands.h"
 #include <Wire.h>
 
@@ -45,7 +46,7 @@ byte probe ( byte addr )
     Wire.beginTransmission(addr);
     Wire.write( CTL | GET_COLS );
     byte ret = 0;
-    
+
     // give the slave up to 10 ms to respond
     for ( int i = 0; i < 10 && ! Wire.available(); i++ )
     {
@@ -60,3 +61,5 @@ byte probe ( byte addr )
 
     return ret; // caller will need to parse
 }
+
+#endif

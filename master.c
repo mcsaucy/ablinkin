@@ -23,7 +23,7 @@ byte scanAndPopulate( Board * curr )
     {
         if ( ( ncol = getCols(addr) ) == 0 )
             continue;
-        
+
         curr = (Board *) malloc( sizeof(Board) );
         curr->address = addr;
         curr->ncols = ncol;

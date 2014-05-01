@@ -5,6 +5,7 @@
 
 #include "segment.h"
 #include <Wire.h>
+#include "sign_common.h"
 
 byte scanAndPopulate ( Board * curr );
 byte getCols( byte tgt );
