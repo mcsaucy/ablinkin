@@ -29,7 +29,7 @@ void setup()
     first = 0;
     last = 0;
 
-    for( uint8_t i = 2; i <= 9; i++ )
+    for( uint8_t i = 2; i < 9; i++ )
     {
         pinMode(i, INPUT);
         address |= digitalRead(i) << (i - 2);
