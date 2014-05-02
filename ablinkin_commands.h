@@ -1,6 +1,8 @@
 #ifndef __ABLINKIN_COMMANDS_H
 #define __ABLINKIN_COMMANDS_H
 
+#include <stdint.h>
+
 // Bit locations in message packets
 // << shift to get your desired bit
 #define MESSAGE_BIT 7
@@ -70,7 +72,7 @@
 // We should be done with macros at this point...
 
 
-byte poke ( byte addr );
+uint8_t poke ( uint8_t addr );
 
 
 

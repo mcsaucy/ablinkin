@@ -3,25 +3,28 @@
 #ifndef __ABLINKIN_SLAVE_H
 #define __ABLINKIN_SLAVE_H
 
+#include <Arduino.h>
+#include <Wire.h>
 #include "segment.h"
 #include "sign_common.h"
-#include <Wire.h>
 
 #define NCOLS 48
 
-byte * columns;
-byte auto_latch; // disengage storage latch before update, reengage afterwards
-byte output_enable;
-byte column_index;
+static uint8_t * columns;
+static uint8_t auto_latch; // disengage storage latch before update, reengage afterwards
+static uint8_t output_enable;
+static uint8_t column_index;
+static volatile uint8_t data;
 
-byte giveCols();
+uint8_t giveCols();
 
 void initSlave();
 void handleRX( int numBytes );
 void handleTX();
 
-byte erase( byte val );
-byte setDisplay( byte val );
-byte shiftColumn( byte col );
-byte setUpdate( byte val );
+uint8_t erase( uint8_t val );
+uint8_t setDisplay( uint8_t val );
+uint8_t setUpdate( uint8_t val );
+uint8_t shiftColumn( uint8_t col );
+
 #endif

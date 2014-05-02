@@ -6,11 +6,13 @@
  */
 
 
+#include <Arduino.h>
 #include <Wire.h>
 #include "ablinkin_commands.h"
 #include "sign_common.h"
 #include "segment.h"
 #include "master.h"
+#include "slave.h"
 
 // Our segment data structure
 Board * segment;
@@ -23,7 +25,7 @@ void setup()
     first = 0;
     last = 0;
 
-    for( byte i = 2; i <= 9; i++ )
+    for( uint8_t i = 2; i <= 9; i++ )
     {
         pinMode(i, INPUT);
         address |= digitalRead(i) << (i - 2);

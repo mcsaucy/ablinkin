@@ -4,12 +4,12 @@
 #define __ABLINKIN_MASTER_H
 
 #include "segment.h"
-#include <Wire.h>
 #include "sign_common.h"
+#include <Wire.h>
 
-byte scanAndPopulate ( Board * curr );
-byte getCols( byte tgt );
-byte tapFoot( byte ms, byte times );
+uint8_t scanAndPopulate ( Board * curr );
+uint8_t getCols( uint8_t tgt );
+uint8_t tapFoot( uint8_t ms, uint8_t times );
 
 
 
