@@ -13,13 +13,17 @@
 #include "segment.h"
 #include "master.h"
 #include "slave.h"
+#include "letters.h"
 
 // Our segment data structure
 Board * segment;
+byte strlength;
+char * string;
 
 void setup()
 {
-
+    string = "/\\";
+    strlength = strlen(string);
     segment = NULL;
     count = 0;
     first = 0;
@@ -41,6 +45,7 @@ void setup()
             delay(100); // allow slaves to come up/wait 100ms and try again
         }
         while ( scanAndPopulate( segment ) == 0 ); // keep trying til it works
+        
     }
     else
     {
@@ -51,9 +56,26 @@ void setup()
 
 void loop()
 {
-
-    Serial.println(address);
-    delay(100);
+    if ( address == 0 )
+    {   
+        for ( int i = 0; i < strlength; i++ )
+        {
+            for ( int j = 0; j < 4; j++ )
+            {
+                Board * curboard = segment;
+                while ( curboard != NULL )
+                {
+                    Wire.beginTransmission( curboard->address );
+                    Wire.write( get_char_section( string[i], j ) );
+                    Wire.endTransmission();
+                    Wire.requestFrom( curboard->address, (byte) 1 );
+                    if ( Wire.available() )
+                        Wire.read();
+                    curboard = curboard->next;
+                }
+            }
+            delay(100);
+        }
+    }
+    delay(10);
 }
-
-
