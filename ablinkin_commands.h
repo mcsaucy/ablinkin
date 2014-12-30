@@ -71,9 +71,6 @@
 
 // We should be done with macros at this point...
 
-
 uint8_t poke ( uint8_t addr );
-
-
 
 #endif
