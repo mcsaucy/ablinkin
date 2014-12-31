@@ -144,6 +144,7 @@ char ch_lookup[] = // Every 4 indeces corresponds to the ascii lookup
 	0x00, 0x00, 0x00, 0x00
 };
 
+// Pull in a given column from a given character
 char get_char_section(char ltr, int section)
 {
 	if (ltr > 0x20)
