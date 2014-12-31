@@ -50,7 +50,7 @@ int readAddress() {
 
 void setup() {
     string = "/\\";
-    strlength = strlen(string);
+    strlength = strlen(string); // because I'm lazy
     segment = NULL;
     count = 0;
     first = 0;
@@ -63,7 +63,7 @@ void setup() {
         Wire.begin();
 
         do {
-            delay(100); // allow slaves to come up/wait 100ms and try again
+            delay(100); // allow slaves to come up; wait 100ms and try again
         } while ( scanAndPopulate(segment) == 0 ); // it'll work eventually
  
     } else {
@@ -75,7 +75,7 @@ void setup() {
 void loop() {
     if ( address == 0 ) {   
         for ( int i = 0; i < strlength; i++ ) {
-            for ( int j = 0; j < 4; j++ ) {
+            for ( int j = 0; j < LETTER_WIDTH; j++ ) {
                 writeOut(segment);
             }
             delay(100);
