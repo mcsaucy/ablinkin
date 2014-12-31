@@ -56,7 +56,7 @@ void setup() {
     first = 0;
     last = 0;
 
-    address = addr;
+    address = readAddress();
 
     if ( address == 0 ) {
         Serial.begin(9600);
@@ -67,6 +67,7 @@ void setup() {
         } while ( scanAndPopulate(segment) == 0 ); // it'll work eventually
  
     } else {
+        // TODO: probe for segment size
         Wire.begin(address);
         initSlave();
     }
