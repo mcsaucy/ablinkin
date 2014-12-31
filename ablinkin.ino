@@ -81,6 +81,9 @@ void loop() {
             }
             delay(100);
         }
+    } else {
+        // TODO: do slavey things
     }
+
     delay(10);
 }
