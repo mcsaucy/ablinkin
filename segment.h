@@ -14,7 +14,7 @@ typedef struct Board{
     struct Board * next;
 } Board;
 
-
+// Insert Board * center AFTER Board * left
 Board * insertLink ( Board * left, Board * center );
 
 // Rus as `free( removeLinkAfter( node ) );` to auto free the unlinked node

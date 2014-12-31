@@ -4,6 +4,7 @@
 #include "segment.h"
 #include "ablinkin_commands.h"
 
+// Insert Board * center AFTER Board * left
 Board * insertLink ( Board * left, Board * center )
 {
     if( left == NULL || center == NULL )
