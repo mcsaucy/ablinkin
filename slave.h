@@ -1,4 +1,4 @@
-// header file for the slave of the i2c bus for Ablinking
+// header file for the slave of the i2c bus for Ablinkin
 
 #ifndef __ABLINKIN_SLAVE_H
 #define __ABLINKIN_SLAVE_H
