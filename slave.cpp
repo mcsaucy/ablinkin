@@ -4,6 +4,7 @@
 #include "ablinkin_commands.h"
 #include "segment.h"
 
+// initialization routine for a slave
 void initSlave()
 {
     pinMode(DAT_PIN, OUTPUT); //data
@@ -25,9 +26,9 @@ void initSlave()
     Wire.onRequest(handleTX);
 }
 
+// Shift out a column of output
 byte shiftColumn( byte col )
 {
-
     if ( col & SET_UPDATE_FLAG_INLINE )
         setUpdate( col & UPDATE_FLAG_INLINE );
 
@@ -41,6 +42,7 @@ byte shiftColumn( byte col )
         ( 1 << SET_UPDATE_FLAG_INLINE_BIT );
 }
 
+// Wipe the slate clean
 byte erase( byte val )
 {
     if ( ! val ) return !!val;
@@ -53,6 +55,7 @@ byte erase( byte val )
     return !!val;
 }
 
+// Set the display bit of the 595
 byte setDisplay( byte val )
 {
     digitalWrite( DSP_PIN, ( val ) ? HIGH : LOW );
@@ -60,6 +63,7 @@ byte setDisplay( byte val )
     return (output_enable = !!val);
 }
 
+// Set the update bit of the 595; this is actually the storage latch bit
 byte setUpdate( byte val )
 {
     digitalWrite(LCH_PIN, LOW);
@@ -67,17 +71,21 @@ byte setUpdate( byte val )
 }
 
 
+// Give the number of LED columns available on this display
 byte giveCols( )
 {
+    // TODO: have a mechanism for detecting this dynamically at started
     return NCOLS;
 }
 
+// ISR for being asked for data
 void handleTX()
 {
     Wire.write(data);
     data = 0;
 }
 
+// ISR for receiving data
 void handleRX( int numBytes )
 {
     data = Wire.read();

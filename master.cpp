@@ -4,6 +4,7 @@
 #include "ablinkin_commands.h"
 #include "segment.h"
 
+// Scan all available i2c addresses looking for slaves
 byte scanAndPopulate( Board * curr )
 {
     byte ct = 0;
@@ -34,6 +35,7 @@ byte scanAndPopulate( Board * curr )
     return ct;
 }
 
+// Wait 'ms' milliseconds 'times' times for data on the wire
 byte tapFoot( byte ms, byte times )
 {
     for ( byte i = 0; i < times; i++ )
@@ -46,8 +48,7 @@ byte tapFoot( byte ms, byte times )
     return 0; // 0, in this case, signifies failure
 }
 
-
-
+// Request the number of columns from a slave board
 byte getCols( byte addr )
 {
     Wire.beginTransmission(addr);
